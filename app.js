@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", router);
 
-const PORT = process.env.PORT || 4200;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+// const PORT = process.env.PORT || 4200;
+app.listen(process.env.PORT || 4200, "0.0.0.0", () => {
+  console.log(`Server running on port ${process.env.PORT || 4200}`);
 });
