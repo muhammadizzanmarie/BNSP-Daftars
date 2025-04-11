@@ -1,25 +1,25 @@
-import db from "./models.js";
+const db = require("./models.js");
 
 // GET semua pendaftar
-export const getAllPendaftar = (req, res) => {
+const getAllPendaftar = (req, res) => {
   db.query("SELECT * FROM tabel_pendaftar", (err, result) => {
     if (err) return res.status(500).json(err);
     res.json(result);
   });
 };
 
-// ✅ GET pendaftar by ID
-export const getPendaftarById = (req, res) => {
+// GET pendaftar by ID
+const getPendaftarById = (req, res) => {
   const { id } = req.params;
   db.query("SELECT * FROM tabel_pendaftar WHERE id_pendaftar = ?", [id], (err, result) => {
     if (err) return res.status(500).json(err);
     if (result.length === 0) return res.status(404).json({ message: "Pendaftar tidak ditemukan" });
-    res.json(result[0]); // kirim satu object
+    res.json(result[0]);
   });
 };
 
 // CREATE pendaftar
-export const createPendaftar = (req, res) => {
+const createPendaftar = (req, res) => {
   const data = req.body;
   const sql = `
     INSERT INTO tabel_pendaftar 
@@ -44,7 +44,7 @@ export const createPendaftar = (req, res) => {
 };
 
 // UPDATE pendaftar
-export const updatePendaftar = (req, res) => {
+const updatePendaftar = (req, res) => {
   const { id } = req.params;
   const data = req.body;
   const sql = `
@@ -71,10 +71,18 @@ export const updatePendaftar = (req, res) => {
 };
 
 // DELETE pendaftar
-export const deletePendaftar = (req, res) => {
+const deletePendaftar = (req, res) => {
   const { id } = req.params;
   db.query("DELETE FROM tabel_pendaftar WHERE id_pendaftar = ?", [id], (err) => {
     if (err) return res.status(500).json(err);
     res.json({ message: "Pendaftar berhasil dihapus!" });
   });
+};
+
+module.exports = {
+  getAllPendaftar,
+  getPendaftarById,
+  createPendaftar,
+  updatePendaftar,
+  deletePendaftar
 };
